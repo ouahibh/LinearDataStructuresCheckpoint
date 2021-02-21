@@ -1,0 +1,65 @@
+ALGORITHM arrays_distinct_overlapping_elements
+VAR
+    T1, T2 : ARRAY_OF INTEGER[100];
+    distinct_sum, overlapping_sum : INTEGER;
+    n1, n2, i, j, p : INTEGER;
+BEGIN
+    // reading the size of each array
+    Write("type the length of the first array"); 
+    REPEAT
+        Write("n1 = ");
+        Read(n1);
+    UNTIL (n1>0 AND n1<=100)
+    Write("type the length of the second array");
+    REPEAT
+        Write("N2 = ");
+        Read(n2);
+    UNTIL (n2>0 AND n2<=100)
+    i := 0;
+    // reading the elements of each array
+    Write("type the elements of the first array (make sure that each element is unique within the array)");
+    FOR i FROM 0 TO n1-1 STEP 1 DO
+        Read(T1[i]);
+    END_FOR
+    i := 0;
+    Write("type the elements of the second array (make sure that each element is unique within the array)");
+    FOR i FROM 0 TO n2-1 STEP 1 DO
+        Read(T2[i]);
+    END_FOR
+    // sum of distinct elements
+    distinct_sum := 0;
+    i := 0; j := 0; 
+    FOR i FROM 0 TO n1-1 STEP 1 DO
+        p := -1;
+        FOR j FROM 0 TO n2-1 STEP 1  DO
+            IF (T1[i]=T2[j]) THEN
+                p := i;
+            END_IF
+        END_FOR
+        IF (p=-1) THEN
+            distinct_sum := distinct_sum + T1[i];
+        END_IF
+    END_FOR
+    i := 0; j := 0;
+    FOR i FROM 0 TO n2-1 STEP 1 DO
+        p := -1;
+        FOR j FROM 0 TO n1-1 STEP 1 DO
+            IF (T2[i]=T1[j]) THEN
+                p := i;
+            END_IF
+        END_FOR
+        IF (p=-1) THEN
+            distinct_sum := distinct_sum + T2[i];
+        END_IF
+    END_FOR
+    // sum of overlapping elements
+   overlapping_sum := 0;
+    i := 0; j := 0;
+    FOR i FROM 0 TO n1-1 STEP 1 DO
+        FOR j FROM 0 TO n2-1 STEP 1 DO
+            IF (T1[i]=T2[j]) THEN
+               overlapping_sum :=overlapping_sum + (T1[i]*2);
+            END_IF
+        END_FOR
+    END_FOR
+END
